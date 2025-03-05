@@ -3,36 +3,55 @@ package org.example.pj_rest_api.Jpa;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "User_data")
 public class JpaUserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_pid", nullable = false)
-    private Integer id;
-
-    @Column(name = "user_id", nullable = false, length = 30)
+    @Column(name = "User_id", nullable = false, length = 50)
     private String userId;
 
-    @Column(name = "user_pw", nullable = false, length = 256)
-    private String userPw;
+    @Column(name = "User_password", nullable = false, length = 50)
+    private String userPassword;
 
-    @Column(name = "user_email", nullable = false, length = 256)
-    private String userEmail;
+    @Column(name = "User_name", nullable = false, length = 30)
+    private String userName;
 
-    public String getUserEmail() {
-        return userEmail;
+    @Column(name = "User_num", nullable = false, length = 30)
+    private String userNum;
+
+    @Column(name = "User_pos", length = 50)
+    private String userPos;
+
+    public String getUserPos() {
+        return userPos;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setUserPos(String userPos) {
+        this.userPos = userPos;
     }
 
-    public String getUserPw() {
-        return userPw;
+    public String getUserNum() {
+        return userNum;
     }
 
-    public void setUserPw(String userPw) {
-        this.userPw = userPw;
+    public void setUserNum(String userNum) {
+        this.userNum = userNum;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
     public String getUserId() {
@@ -41,13 +60,5 @@ public class JpaUserEntity {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }

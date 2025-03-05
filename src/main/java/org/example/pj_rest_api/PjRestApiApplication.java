@@ -9,5 +9,4 @@ public class PjRestApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(PjRestApiApplication.class, args);
     }
-//asdd
 }

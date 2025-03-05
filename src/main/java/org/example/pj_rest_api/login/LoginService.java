@@ -13,6 +13,6 @@ public class LoginService {
     }
     public boolean login(String username, String password) {
         Optional<JpaUserEntity> user = loginRepository.findByUserId(username);
-        return user.map(u -> u.getUserPw().equals(password)).orElse(false);
+        return user.map(u -> u.getUserPassword().equals(password)).orElse(false);
     }
 }
