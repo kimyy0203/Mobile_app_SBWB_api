@@ -42,4 +42,14 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password update failed");
         }
     }
+
+    @PostMapping("/updatePos") // 관할 구역 변경
+    public ResponseEntity<String> updatePos(@RequestBody LoginRequest request){
+        boolean isUpdatePos = loginService.updatePos(request.getUsername(), request.getPos());
+        if(isUpdatePos){
+            return ResponseEntity.ok("Position update successful");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Position update failed");
+        }
+    }
 }

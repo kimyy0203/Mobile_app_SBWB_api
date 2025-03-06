@@ -47,4 +47,18 @@ public class LoginService {
         loginRepository.save(user);
         return true;
     }
+    @Transactional
+    public boolean updatePos(String username, String pos) {
+        Optional<JpaUserEntity> optionalUser = loginRepository.findByUserId(username);
+
+        if (optionalUser.isEmpty()) {
+            return false; // 사용자 존재하지 않음
+        }
+
+        JpaUserEntity user = optionalUser.get();
+        user.setUserPos(pos); // 관할 구역 변경
+        loginRepository.save(user);
+        return true;
+    }
+
 }

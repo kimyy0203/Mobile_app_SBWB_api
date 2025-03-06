@@ -6,6 +6,7 @@ public class LoginRequest {
     private String name;
     private String num;
     private String newPassword;
+    private String pos;
 
     public LoginRequest() {}
 
@@ -38,6 +39,12 @@ public class LoginRequest {
     }
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+    public String getPos() {
+        return pos;
+    }
+    public void setPos(String pos) {
+        this.pos = pos;
     }
 
 }
