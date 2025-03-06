@@ -3,10 +3,9 @@ package org.example.pj_rest_api.Jpa;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "User_data")
+@Table(name = "user_data")
 public class JpaUserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "User_id", nullable = false, length = 50)
     private String userId;
 

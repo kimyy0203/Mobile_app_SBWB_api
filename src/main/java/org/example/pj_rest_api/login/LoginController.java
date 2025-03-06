@@ -23,4 +23,13 @@ public class LoginController {
             //테스트
         }
     }
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody LoginRequest request){
+        boolean isRegister = loginService.register(request.getUsername(), request.getPassword(), request.getName(), request.getNum());
+        if(isRegister){
+            return ResponseEntity.ok("Register successful");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Register failed");
+        }
+    }
 }
