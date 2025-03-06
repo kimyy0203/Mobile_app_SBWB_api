@@ -35,8 +35,8 @@ public class LoginController {
 
     @PostMapping("/updatePassword") // 비밀번호 변경
     public ResponseEntity<String> updatePassword(@RequestBody LoginRequest request){
-        boolean isAuthenticated = loginService.updatePassword(request.getUsername(), request.getPassword(), request.getNewPassword());
-        if(isAuthenticated){
+        boolean isUpdatePassword = loginService.updatePassword(request.getUsername(), request.getPassword(), request.getNewPassword());
+        if(isUpdatePassword){
             return ResponseEntity.ok("Password update successful");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password update failed");
