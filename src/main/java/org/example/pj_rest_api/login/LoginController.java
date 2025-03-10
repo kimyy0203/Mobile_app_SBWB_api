@@ -22,7 +22,6 @@ public class LoginController {
         boolean isAuthenticated = loginService.login(request.getUsername(), request.getPassword());
         if(isAuthenticated){
             String token = jwtTokenProvider.generateToken(request.getUsername());
-            // return ResponseEntity.ok("Login successful");
             return ResponseEntity.ok("Bearer " + token); // JWT 반환
         } else {
             // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed"); // 테스트

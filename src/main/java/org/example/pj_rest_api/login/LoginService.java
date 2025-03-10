@@ -1,6 +1,6 @@
 package org.example.pj_rest_api.login;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.example.pj_rest_api.Jpa.JpaUserEntity;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +12,7 @@ public class LoginService {
     public LoginService(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
     }
+    @Transactional( readOnly = true )
     public boolean login(String username, String password) {
         Optional<JpaUserEntity> user = loginRepository.findByUserId(username);
         return user.map(u -> u.getUserPassword().equals(password)).orElse(false);
