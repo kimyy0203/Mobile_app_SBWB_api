@@ -24,8 +24,7 @@ public class LoginController {
             String token = jwtTokenProvider.generateToken(request.getUsername());
             return ResponseEntity.ok("Bearer " + token); // JWT 반환
         } else {
-            // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed"); // 테스트
-            return ResponseEntity.status(401).body("Login failed");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
         }
     }
     @PostMapping("/register")
