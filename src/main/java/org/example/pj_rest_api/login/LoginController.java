@@ -38,6 +38,7 @@ public class LoginController {
     }
 
     @PostMapping("/updatePassword") // 비밀번호 변경
+    
     public ResponseEntity<String> updatePassword(@RequestBody LoginRequest request){
         String authenticatedUser = SecurityContextHolder.getContext().getAuthentication().getName();
 
