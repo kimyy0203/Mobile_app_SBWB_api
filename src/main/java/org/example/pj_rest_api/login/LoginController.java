@@ -29,12 +29,8 @@ public class LoginController {
     }
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody LoginRequest request){
-        boolean isRegister = loginService.register(request.getUsername(), request.getPassword(), request.getName(), request.getNum());
-        if(isRegister){
-            return ResponseEntity.ok("Register successful");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Register failed");
-        }
+        loginService.register(request.getUsername(), request.getPassword(), request.getName(), request.getNum());
+        return ResponseEntity.ok("Register successful");
     }
 
     @PostMapping("/updatePassword") // 비밀번호 변경
@@ -59,5 +55,9 @@ public class LoginController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Position update failed");
         }
+    }
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException e){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 }

@@ -1,5 +1,6 @@
 package org.example.pj_rest_api.login;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import org.example.pj_rest_api.Jpa.JpaUserEntity;
 import org.springframework.stereotype.Service;
@@ -18,17 +19,24 @@ public class LoginService {
         return user.map(u -> u.getUserPassword().equals(password)).orElse(false);
     }
     @Transactional
-    public boolean register(String username, String password, String name, String num) {
-        if(loginRepository.findByUserId(username).isPresent())
-            return false;
-        else {
+    public void register(String username, String password, String name, String num) {
+        try {
             JpaUserEntity user = new JpaUserEntity();
+            if(loginRepository.existsById(username))//username으로 중복 검사 -> 중복 발생 시 throw
+                throw new DataIntegrityViolationException("이미 존재하는 ID 입니다.");
             user.setUserId(username);
             user.setUserPassword(password);
             user.setUserName(name);
             user.setUserNum(num);
-            loginRepository.save(user);
-            return true;
+            loginRepository.saveAndFlush(user);
+        }
+        catch (DataIntegrityViolationException e) {
+            String errorMessage = e.getMessage().toLowerCase();
+            if(errorMessage.contains("'user_num'")) {
+                throw new RuntimeException("이미 등록된 전화번호 입니다.");
+            }
+            else
+                throw e;
         }
     }
     @Transactional

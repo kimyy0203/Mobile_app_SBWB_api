@@ -15,7 +15,7 @@ public class JpaUserEntity {
     @Column(name = "User_name", nullable = false, length = 30)
     private String userName;
 
-    @Column(name = "User_num", nullable = false, length = 30)
+    @Column(name = "User_num", nullable = false, unique = true, length = 30)
     private String userNum;
 
     @Column(name = "User_pos", length = 50)
