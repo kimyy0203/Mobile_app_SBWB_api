@@ -1,11 +1,14 @@
 package org.example.pj_rest_api.login;
 
+import org.example.pj_rest_api.Jpa.JpaUserEntity;
 import org.example.pj_rest_api.dto.LoginRequest;
 import org.example.pj_rest_api.security.JwtTokenProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -34,7 +37,6 @@ public class LoginController {
     }
 
     @PostMapping("/updatePassword") // 비밀번호 변경
-    
     public ResponseEntity<String> updatePassword(@RequestBody LoginRequest request){
         String authenticatedUser = SecurityContextHolder.getContext().getAuthentication().getName();
 
@@ -57,6 +59,14 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Position update failed");
         }
     }
+
+    @PostMapping("/getinfo")
+    public ResponseEntity<JpaUserEntity> getInfo(){
+        String authenticatedUser = SecurityContextHolder.getContext().getAuthentication().getName();
+        JpaUserEntity user = loginService.getInfo(authenticatedUser);
+        return ResponseEntity.ok(user);
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleRuntimeException(RuntimeException e){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

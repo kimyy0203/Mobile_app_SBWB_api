@@ -1,6 +1,7 @@
 package org.example.pj_rest_api.login;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.example.pj_rest_api.Jpa.JpaUserEntity;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,13 @@ public class LoginService {
     public LoginService(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
     }
+
     @Transactional( readOnly = true )
     public boolean login(String username, String password) {
         Optional<JpaUserEntity> user = loginRepository.findByUserId(username);
         return user.map(u -> u.getUserPassword().equals(password)).orElse(false);
     }
+
     @Transactional
     public void register(String username, String password, String name, String num) {
         try {
@@ -39,6 +42,7 @@ public class LoginService {
                 throw e;
         }
     }
+
     @Transactional
     public boolean updatePassword(String username, String password, String newPassword) {
         Optional<JpaUserEntity> optionalUser = loginRepository.findByUserId(username);
@@ -56,6 +60,7 @@ public class LoginService {
         loginRepository.save(user);
         return true;
     }
+
     @Transactional
     public boolean updatePos(String username, String pos) {
         Optional<JpaUserEntity> optionalUser = loginRepository.findByUserId(username);
@@ -68,6 +73,15 @@ public class LoginService {
         user.setUserPos(pos); // 관할 구역 변경
         loginRepository.save(user);
         return true;
+    }
+
+    @Transactional
+    public JpaUserEntity getInfo(String username) {
+        Optional<JpaUserEntity> optionalUser = loginRepository.findByUserId(username);
+        if (optionalUser.isEmpty()) {
+            throw new UsernameNotFoundException("유저가 존재하지 않습니다.");
+        }
+        return optionalUser.get();
     }
 
 }
