@@ -1,15 +1,18 @@
 package org.example.pj_rest_api.login;
 
+import org.example.pj_rest_api.security.SHA256;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.example.pj_rest_api.Jpa.JpaUserEntity;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 @Service
 public class LoginService {
     private final LoginRepository loginRepository;
+    SHA256 sha256 = new SHA256();
 
     public LoginService(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
@@ -17,18 +20,20 @@ public class LoginService {
 
     @Transactional( readOnly = true )
     public boolean login(String username, String password) {
+        String encryptedPw = sha256.encrypt(password);
         Optional<JpaUserEntity> user = loginRepository.findByUserId(username);
-        return user.map(u -> u.getUserPassword().equals(password)).orElse(false);
+        return user.map(u -> u.getUserPassword().equals(encryptedPw)).orElse(false);
     }
 
     @Transactional
     public void register(String username, String password, String name, String num) {
+        String encryptedPw = sha256.encrypt(password);
         try {
             JpaUserEntity user = new JpaUserEntity();
             if(loginRepository.existsById(username))//username으로 중복 검사 -> 중복 발생 시 throw
                 throw new DataIntegrityViolationException("이미 존재하는 ID 입니다.");
             user.setUserId(username);
-            user.setUserPassword(password);
+            user.setUserPassword(encryptedPw);
             user.setUserName(name);
             user.setUserNum(num);
             loginRepository.saveAndFlush(user);
@@ -46,17 +51,18 @@ public class LoginService {
     @Transactional
     public boolean updatePassword(String username, String password, String newPassword) {
         Optional<JpaUserEntity> optionalUser = loginRepository.findByUserId(username);
+        String encryptedPw = sha256.encrypt(password);
 
         if (optionalUser.isEmpty()) {
             return false; // 사용자 존재하지 않음
         }
 
         JpaUserEntity user = optionalUser.get();
-        if (!user.getUserPassword().equals(password)) {
+        if (!user.getUserPassword().equals(encryptedPw)) {
             return false; // 기존 비밀번호 불일치
         }
-
-        user.setUserPassword(newPassword); // 비밀번호 변경
+        encryptedPw = sha256.encrypt(newPassword);
+        user.setUserPassword(encryptedPw); // 비밀번호 변경
         loginRepository.save(user);
         return true;
     }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 @RestController
@@ -21,7 +22,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest request){
+    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
         boolean isAuthenticated = loginService.login(request.getUsername(), request.getPassword());
         if(isAuthenticated){
             String token = jwtTokenProvider.generateToken(request.getUsername());
