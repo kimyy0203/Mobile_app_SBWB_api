@@ -17,8 +17,13 @@ public class PinController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<JpaPinEntity>> getAllPins() {
-        List<JpaPinEntity> pins = pinService.getAllPins();
+    public ResponseEntity<List<JpaPinEntity>> getPins(
+            @RequestParam(required = false) String ctprvnNm,
+            @RequestParam(required = false) String signguNm,
+            @RequestParam(required = false) String latitude,
+            @RequestParam(required = false) String longitude
+    ) {
+        List<JpaPinEntity> pins = pinService.getPins(ctprvnNm, signguNm, latitude, longitude);
         return ResponseEntity.ok(pins);
     }
 }

@@ -11,11 +11,30 @@ public class JpaPinEntity {
     @Column(name = "comment", nullable = false, length = 100)
     private String comment;
 
-    @Column(name = "loc", nullable = false, length = 10)
-    private String loc;
-
     @Column(name = "cat", nullable = false, length = 10)
     private String cat;
+
+    @Column(name = "ctprvnnm", nullable = false, length = 10)
+    private String ctprvnnm;
+
+    @Column(name = "signgunm", nullable = false, length = 10)
+    private String signgunm;
+
+    public String getSigngunm() {
+        return signgunm;
+    }
+
+    public void setSigngunm(String signgunm) {
+        this.signgunm = signgunm;
+    }
+
+    public String getCtprvnnm() {
+        return ctprvnnm;
+    }
+
+    public void setCtprvnnm(String ctprvnnm) {
+        this.ctprvnnm = ctprvnnm;
+    }
 
     public String getCat() {
         return cat;
@@ -23,14 +42,6 @@ public class JpaPinEntity {
 
     public void setCat(String cat) {
         this.cat = cat;
-    }
-
-    public String getLoc() {
-        return loc;
-    }
-
-    public void setLoc(String loc) {
-        this.loc = loc;
     }
 
     public String getComment() {

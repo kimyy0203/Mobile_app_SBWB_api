@@ -14,7 +14,7 @@ public class PinService {
         this.pinRepository = pinRepository;
     }
 
-    public List<JpaPinEntity> getAllPins() {
-        return pinRepository.findAll();
+    public List<JpaPinEntity> getPins(String ctprvnnm, String signgunm, String latitude, String longitude) {
+        return pinRepository.findByFilters(ctprvnnm, signgunm, latitude, longitude);
     }
 }
