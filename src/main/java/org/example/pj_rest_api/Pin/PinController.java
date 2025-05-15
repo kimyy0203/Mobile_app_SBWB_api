@@ -23,16 +23,17 @@ public class PinController {
             @RequestParam(required = false) String ctprvnNm,
             @RequestParam(required = false) String signguNm,
             @RequestParam(required = false) BigDecimal latitude,
-            @RequestParam(required = false) BigDecimal longitude
+            @RequestParam(required = false) BigDecimal longitude,
+            @RequestParam(required = false) String cat
     ) {
-        List<JpaPinEntity> pins = pinService.getPins(ctprvnNm, signguNm, latitude, longitude);
+        List<JpaPinEntity> pins = pinService.getPins(ctprvnNm, signguNm, latitude, longitude, cat);
         return ResponseEntity.ok(pins);
     }
 
     @PostMapping("/add")
     public ResponseEntity<List<JpaPinEntity>> addPin(@RequestBody PinRequest pin) {
         pinService.pinAction("add",pin.getLat(),pin.getLon(),pin.getCom(),pin.getCtp(),pin.getSig(),pin.getCat());
-        List<JpaPinEntity> pins = pinService.getPins(null,null,pin.getLat(),pin.getLon());
+        List<JpaPinEntity> pins = pinService.getPins(null,null,pin.getLat(),pin.getLon(),null);
         return ResponseEntity.ok(pins);
     }
     @PostMapping("/del")
@@ -43,7 +44,7 @@ public class PinController {
     @PostMapping("/mod")
     public ResponseEntity<List<JpaPinEntity>> changePin(@RequestBody PinRequest pin) {
         pinService.pinAction("mod",pin.getLat(),pin.getLon(),pin.getCom(),pin.getCtp(),pin.getSig(),pin.getCat());
-        List<JpaPinEntity> pins = pinService.getPins(null,null,pin.getLat(),pin.getLon());
+        List<JpaPinEntity> pins = pinService.getPins(null,null,pin.getLat(),pin.getLon(),null);
         return ResponseEntity.ok(pins);
     }
 

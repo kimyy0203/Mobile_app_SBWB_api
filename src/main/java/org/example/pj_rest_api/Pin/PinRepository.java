@@ -14,11 +14,13 @@ public interface PinRepository extends JpaRepository<JpaPinEntity, JpaPinEntityI
             "(:signgunm IS NULL OR p.signgunm = :signgunm) AND " +
             "(:ctprvnnm IS NULL OR p.ctprvnnm = :ctprvnnm) AND " +
             "(:latitude IS NULL OR p.id.lat = :latitude) AND " +
-            "(:longitude IS NULL OR p.id.lon = :longitude)")
+            "(:longitude IS NULL OR p.id.lon = :longitude) AND " +
+            "(:cat IS NULL OR p.cat = :cat )")
     List<JpaPinEntity> findByFilters(
             @Param("ctprvnnm") String ctprvnnm,
             @Param("signgunm") String signgunm,
             @Param("latitude") BigDecimal latitude,
-            @Param("longitude") BigDecimal longitude
+            @Param("longitude") BigDecimal longitude,
+            @Param("cat") String cat
     );
 }
