@@ -22,7 +22,7 @@ public class PinService {
     }
 
     @Transactional
-    public void pinAction(String type, BigDecimal lat, BigDecimal lon, String com, String ctp, String sig, String cat) {
+    public void pinAction(String type, BigDecimal lat, BigDecimal lon, String com, String ctp, String sig, String cat, String addr) {
         JpaPinEntityId Id = new JpaPinEntityId();
         Id.setLat(lat);
         Id.setLon(lon);
@@ -40,6 +40,7 @@ public class PinService {
                         pin.setCtprvnnm(ctp);
                         pin.setSigngunm(sig);
                         pin.setCat(cat);
+                        pin.setAddr(addr);
                         pinRepository.saveAndFlush(pin);
                     }
                     break;

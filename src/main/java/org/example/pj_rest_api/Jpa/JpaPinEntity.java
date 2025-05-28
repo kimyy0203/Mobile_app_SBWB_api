@@ -2,6 +2,8 @@ package org.example.pj_rest_api.Jpa;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "com_pin")
 public class JpaPinEntity {
@@ -19,6 +21,17 @@ public class JpaPinEntity {
 
     @Column(name = "signgunm", nullable = false, length = 10)
     private String signgunm;
+
+    @Column(name = "addr", nullable = false, length = 50)
+    private String addr;
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
 
     public String getSigngunm() {
         return signgunm;

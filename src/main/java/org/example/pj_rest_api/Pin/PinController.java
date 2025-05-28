@@ -32,18 +32,18 @@ public class PinController {
 
     @PostMapping("/add")
     public ResponseEntity<List<JpaPinEntity>> addPin(@RequestBody PinRequest pin) {
-        pinService.pinAction("add",pin.getLat(),pin.getLon(),pin.getCom(),pin.getCtp(),pin.getSig(),pin.getCat());
+        pinService.pinAction("add",pin.getLat(),pin.getLon(),pin.getCom(),pin.getCtp(),pin.getSig(),pin.getCat(),pin.getAddr());
         List<JpaPinEntity> pins = pinService.getPins(null,null,pin.getLat(),pin.getLon(),null);
         return ResponseEntity.ok(pins);
     }
     @PostMapping("/del")
     public ResponseEntity<String> removePin(@RequestBody PinRequest pin) {
-        pinService.pinAction("del",pin.getLat(),pin.getLon(),null, null, null, null);
+        pinService.pinAction("del",pin.getLat(),pin.getLon(),null, null, null, null,null);
         return ResponseEntity.ok("Pin delete successful");
     }
     @PostMapping("/mod")
     public ResponseEntity<List<JpaPinEntity>> changePin(@RequestBody PinRequest pin) {
-        pinService.pinAction("mod",pin.getLat(),pin.getLon(),pin.getCom(),pin.getCtp(),pin.getSig(),pin.getCat());
+        pinService.pinAction("mod",pin.getLat(),pin.getLon(),pin.getCom(),pin.getCtp(),pin.getSig(),pin.getCat(),pin.getAddr());
         List<JpaPinEntity> pins = pinService.getPins(null,null,pin.getLat(),pin.getLon(),null);
         return ResponseEntity.ok(pins);
     }
