@@ -2,6 +2,7 @@ package org.example.pj_rest_api.Jpa;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity
@@ -24,6 +25,17 @@ public class JpaPinEntity {
 
     @Column(name = "addr", nullable = false, length = 50)
     private String addr;
+
+    @Column(name = "date", nullable = false, insertable = false, updatable = false)
+    private Instant date;
+
+    public Instant getDate() {
+        return date;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
 
     public String getAddr() {
         return addr;

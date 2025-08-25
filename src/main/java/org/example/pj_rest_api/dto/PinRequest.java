@@ -10,6 +10,7 @@ public class PinRequest {
     private String sig;
     private String cat;
     private String addr;
+    private String type;
     public PinRequest() {}
     public BigDecimal getLat() {
         return lat;
@@ -46,5 +47,8 @@ public class PinRequest {
     }
     public void setAddr(String addr){
         this.addr=addr;
+    }
+    public String getType() {
+        return type;
     }
 }

@@ -47,6 +47,11 @@ public class PinController {
         List<JpaPinEntity> pins = pinService.getPins(null,null,pin.getLat(),pin.getLon(),null);
         return ResponseEntity.ok(pins);
     }
+    @PostMapping("/search")
+    public ResponseEntity<List<JpaPinEntity>> searchPin(@RequestBody PinRequest pin) {
+        List<JpaPinEntity> pins = pinService.pinSearch(pin.getType(),pin.getCom());
+        return ResponseEntity.ok(pins);
+    }
 
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<String> handleIllegalStateException(IllegalStateException e){

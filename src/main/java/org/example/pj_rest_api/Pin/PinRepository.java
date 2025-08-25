@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface PinRepository extends JpaRepository<JpaPinEntity, JpaPinEntityId> {
-    @Query("SELECT p FROM JpaPinEntity p WHERE " +
+    @Query(value = "SELECT p FROM JpaPinEntity p WHERE " +
             "(:signgunm IS NULL OR p.signgunm = :signgunm) AND " +
             "(:ctprvnnm IS NULL OR p.ctprvnnm = :ctprvnnm) AND " +
             "(:latitude IS NULL OR p.id.lat = :latitude) AND " +
@@ -23,4 +23,8 @@ public interface PinRepository extends JpaRepository<JpaPinEntity, JpaPinEntityI
             @Param("longitude") BigDecimal longitude,
             @Param("cat") String cat
     );
+    List<JpaPinEntity> findByAddrContaining(String search);
+    List<JpaPinEntity> findByCommentContaining(String search);
+    @Query("SELECT p FROM JpaPinEntity p where p.addr LIKE %:search% or p.comment like %:search%")
+    List<JpaPinEntity> findByAddrOrCommentContaining(@Param("search") String search);
 }
